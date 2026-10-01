@@ -13,7 +13,12 @@ phases:
       - docker tag ecs-node-app:latest 021913935619.dkr.ecr.ap-south-1.amazonaws.com/ecs-node-app:latest
 
   post_build:
-    commands:
-      - echo Pushing Docker image to ECR...
-      - docker push 021913935619.dkr.ecr.ap-south-1.amazonaws.com/ecs-node-app:latest
-      - echo Build completed successfully.
+  commands:
+    - echo Pushing Docker image to ECR...
+    - docker push 021913935619.dkr.ecr.ap-south-1.amazonaws.com/ecs-node-app:latest
+    - printf '[{"name":"ecs-node-container","imageUri":"021913935619.dkr.ecr.ap-south-1.amazonaws.com/ecs-node-app:latest"}]' > imagedefinitions.json
+    - echo Build completed successfully.
+
+  artifacts:
+  files:
+    - imagedefinitions.json
